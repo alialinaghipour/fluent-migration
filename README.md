@@ -8,6 +8,13 @@
     </ItemGroup>
 
 
+{
+  "PersistenceConfig": {
+    "ConnectionString": "Server=.;Database=AliDb;user id=sa;password=123@qwe123;Encrypt=false;TrustServerCertificate=true;"
+  }
+}
+
+
 
 
     using FluentMigrator.Runner;
