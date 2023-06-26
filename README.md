@@ -1,3 +1,60 @@
+ // var query =
+            //     (from orderDetail in _context.OrderDetails
+            //         join order in _context.Orders on orderDetail.OrderId equals order.Id
+            //         join user in _context.Users on order.UserId equals user.Id 
+            //         group orderDetail by new
+            //         {
+            //             OrderId =orderDetail.OrderId,
+            //             UserName =user.Name,
+            //             Date = order.Date
+            //         }
+            //         into groupBy
+            //         select new GetAllOrders()
+            //         {
+            //             OrderId = groupBy.Key.OrderId,
+            //             OrderDate = groupBy.Key.Date,
+            //             UserName = groupBy.Key.UserName,
+            //             Products = groupBy.Select(_=>new GetBoughtProductDto()
+            //             {
+            //                 ProductName = _.Product.Name
+            //             }).ToList()
+            //         }).ToList();
+            //
+            // return query;
+            
+            
+            var query =
+                (from orderDetail in _context.OrderDetails
+                    group orderDetail by new
+                    {
+                        OrderId =orderDetail.OrderId,
+                        UserName =orderDetail.Order.User.Name,
+                        Date = orderDetail.Order.Date
+                    }
+                    into groupBy
+                    select new GetAllOrders()
+                    {
+                        OrderId = groupBy.Key.OrderId,
+                        OrderDate = groupBy.Key.Date,
+                        UserName = groupBy.Key.UserName,
+                        Products = groupBy.Select(_=>new GetBoughtProductDto()
+                        {
+                            ProductName = _.Product.Name
+                        }).ToList()
+                    }).ToList();
+            
+            return query;
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    <ItemGroup>
         <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
